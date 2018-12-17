@@ -1,5 +1,5 @@
 ## Mykkeltveit's Decycling Algorithm Implementation
-This is an efficient lightweight C implementation to the Mykkeltviet's Algorithm for decycling de-Bruijn graph.
+This is an efficient lightweight C implementation to the Mykkeltveit's Algorithm for decycling de-Bruijn graph.
 The alphabet used for the code is '0123', but can be replaced to any 2^k long alphabet.
 
 #### Usage
