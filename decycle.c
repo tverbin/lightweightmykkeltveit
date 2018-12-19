@@ -30,7 +30,7 @@ enum mykkeltveit_color get_mykkeltveit_color(int64_t kmer, int64_t k, float *x_v
 	int i;
 
 	for (i = 0; i < k; i++) {
-		sum += x_values_arr[i] * (float)(((MAX_DIGIT << (i*BASE_BITS)) & kmer) >> (i*BASE_BITS));
+		sum += x_values_arr[k-i-1] * (float)(((MAX_DIGIT << (i*BASE_BITS)) & kmer) >> (i*BASE_BITS));
 	}
 	if (sum > -PRECISION && sum < PRECISION)
 		return MC_C;
@@ -58,7 +58,7 @@ int64_t choose_vertex_to_remove(int64_t vertex, int64_t k, int64_t num_of_k_mers
 
 	/* TODO: replace to binary search implementation, possible due to the 
 	 *       R-block L-block structure */
-	while (next_color != 1 || current_color == 1) {
+	while (next_color != MC_L || current_color == MC_L) {
 		current_vertex = next_vertex;
 		last_char = current_vertex >> (k * BASE_BITS - BASE_BITS);
 		next_vertex = ((current_vertex & ((num_of_k_mers - 1) >> BASE_BITS)) << BASE_BITS) + last_char;
@@ -102,7 +102,7 @@ void print_decycle_set(int64_t k)
 			count++;
 			/* the vertex is symmetric and as a result the whole will be 
 			 * colored with C */
-			if (i == k)
+			if (i != k)
 				remove_vertex  = cycle;
 			/* choose vertex based on mykkeltveit de-Bruijn coloring */
 			else
